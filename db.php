@@ -3,6 +3,28 @@ namespace cm;
 
 use Medoo\Medoo;
 
+// function startWith($str, $s){
+//     return strpos($str, $s) === 0;
+// }
+// function is_string_column($type){
+//     if(startWith(strtolower($type), 'char')
+//         || startWith(strtolower($type), 'varchar')
+//         || startWith(strtolower($type), 'datetime')){
+//         return 2;
+//     }else{
+//         return 1;
+//     }
+// }
+
+// cm\db::init([
+//     'database_type' => 'mysql',
+//     'database_name' => 'myapp_dev',
+//     'server' => 'mysql',
+//     'username' => 'root',
+//     'password' => '123456',
+//     'charset' => 'utf8',
+// ]);
+
 if (!function_exists('fixfn')) {
     function fixfn ($fnlist){
         foreach($fnlist as $fname){
@@ -167,7 +189,7 @@ class db {
 
     public static function test(){
         $sql = "select * from tags limit 10";
-        $rows = self::obj()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $rows = self::obj()->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
         var_dump($rows);
     }
 
@@ -196,6 +218,7 @@ class db {
 				explode(' ', 'AND OR GROUP ORDER HAVING LIMIT LIKE MATCH')
 			));
 
+            $cond = [];
 			if ($single_condition != array()) {
                 $cond = $single_condition;
                 if(!self::has_st($name, $cond)){
@@ -227,7 +250,7 @@ class db {
         return $where;
     }
 
-    public static function all_sql($name, $where='', $cols='*', $join=null){
+    public static function all_sql($name, $where=[], $cols='*', $join=null){
         $map = [];
         if($join){
             $sql= self::obj()->selectContext($name, $map, $join, $cols, $where);
@@ -259,7 +282,7 @@ class db {
     //      'pageinfo' => ctx::pageinfo(),
     //      'tpl'=>'/admin/user_list'
     // ];
-    public static function all($name, $where='', $cols='*', $join=null){
+    public static function all($name, $where=[], $cols='*', $join=null){
         $where = self::getWhere($name, $where);
         if($join){
             $rows = self::obj()->select($name, $join, $cols, $where);
@@ -274,11 +297,11 @@ class db {
         return self::obj()->count($name, $where);
     }
 
-    public static function row_sql($name, $where='', $cols='*', $join=''){
+    public static function row_sql($name, $where=[], $cols='*', $join=''){
         return self::row($name, $where, $cols, $join, true);
     }
 
-    public static function row($name, $where='', $cols='*', $join='', $sql_only=null){
+    public static function row($name, $where=[], $cols='*', $join='', $sql_only=null){
         $where = self::getWhere($name, $where);
         if(!isset($where['LIMIT'])){
             $where['LIMIT'] = 1;
@@ -297,7 +320,7 @@ class db {
         }
     }
 
-    public static function one($name, $where='', $cols='*', $join=''){
+    public static function one($name, $where=[], $cols='*', $join=''){
         $row = self::row($name, $where, $cols, $join);
         $var = '';
         if($row){
@@ -361,8 +384,7 @@ class db {
     }
 
     public static function query($sql){
-        info($sql);
-        return self::obj()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return self::obj()->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public static function queryRow($sql){
