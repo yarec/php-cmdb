@@ -1,0 +1,16 @@
+{
+    "name": "yarec/cmdb",
+    "description": "...",
+    "type": "library",
+    "require": {
+        "catfan/medoo": "^1.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "a",
+            "email": "a@b.c"
+        }
+    ],
+    "minimum-stability": "dev"
+}
