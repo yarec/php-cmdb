@@ -12,5 +12,10 @@
             "email": "a@b.c"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+		"psr-4": {
+			"": "./"
+		}
+	}
 }
