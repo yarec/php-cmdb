@@ -1,4 +1,6 @@
 <?php
+namespace cm;
+
 use Medoo\Medoo;
 
 if (!function_exists('fixfn')) {
@@ -16,7 +18,7 @@ if (!class_exists('cfg')) {
         public static function get_db_cfg(){
             return array(
                 'database_type' => 'mysql',
-                'database_name' => 'kphone',
+                'database_name' => 'myapp_dev',
                 'server' => 'mysql',
                 'username' => 'root',
                 'password' => '123456',
