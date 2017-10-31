@@ -56,7 +56,7 @@ class RestHelper {
         return self::ins()->uid();
     }
 
-    public static function get($k, $def){
+    public static function get($k, $def=''){
         return self::ins()->get($k, $def);
     }
     public static function gets(){
